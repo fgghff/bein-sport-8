@@ -14,7 +14,7 @@
     html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
     .jwplayer { position: relative; width: 100%; height: 100%; }
     .jwplayer .jw-media video { width: 100%; height: 100%; object-fit: fill; }
-    
+
     .jw-controlbar.jw-reset , .jw-reset.jw-settings-menu , .resizeButton {
       background: #00000043;
       backdrop-filter: blur(10px);
@@ -59,10 +59,10 @@
       repeat: true,
       volume: 100,
       autostart: true,
-      mute: false,
+      mute: false, // الصوت مفعل تلقائيًا
       defaultQuality: 1, // تحديد الجودة المنخفضة افتراضيًا
       playbackRateControls: true, // دعم تغيير السرعة تلقائيًا
-      stretching: "uniform", // ضبط الفيديو بشكل يناسب كل الشاشات
+      stretching: "uniform", // ضبط الفيديو بحيث يناسب جميع الشاشات
       drm: {
         clearkey: {
           keyId: "fa58e7eb3a4d36949c71ac3ef6e869d8",
@@ -75,6 +75,12 @@
         inactive: "#ffffffc9",
         background: "#00000020"
       }
+    });
+
+    // التأكد من أن الصوت يعمل بدون الحاجة إلى زر
+    player.on('play', function() {
+      player.setMute(false); // إلغاء كتم الصوت عند التشغيل
+      player.setVolume(100); // ضبط مستوى الصوت على 100%
     });
 
     // في حال حدوث خطأ أثناء التشغيل باستخدام clearkey، يتم إعادة تهيئة اللاعب باستخدام clearKeys
@@ -114,7 +120,7 @@
 
     // تحسين الأداء عند تشغيل الفيديو على الشاشات الكبيرة
     jwplayer("my-jwplayer").on('ready', function() {
-      jwplayer("my-jwplayer").setControls(false); // تعطيل التحكمات في الشاشة الكبيرة
+      jwplayer("my-jwplayer").setControls(true); // تفعيل التحكمات لظهور زر الصوت
     });
 
     // وظيفة تغيير حجم الفيديو عند الضغط على زر التكبير/التصغير
